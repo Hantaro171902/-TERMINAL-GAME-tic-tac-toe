@@ -1,6 +1,12 @@
 #include <iostream>
 #include <string>
+
 using namespace std;
+
+const string RED = "\033[31m";
+const string BLUE = "\033[34m";
+const string RESET = "\033[0m";
+
 
 // Player class to represent a player in game
 class Player {
@@ -39,7 +45,15 @@ public:
         for (int i = 0; i < 3; i++) {
             cout << "| ";
             for (int j = 0; j < 3; j++) {
-                cout << grid[i][j] << " | ";
+                // cout << grid[i][j] << " | ";
+                char cell = grid[i][j];
+                if (cell == 'X')
+                    cout << RED << cell << RESET << " | ";
+                else if (cell == 'O')
+                    cout << BLUE << cell << RESET << " | ";
+                else
+                    cout << cell << " | ";
+
             }
             cout << endl << "-------------" << endl;
         }
@@ -133,6 +147,7 @@ public:
             
             // Get valid input
             while (true) {
+                string color = currentPlayer.getSymbol() == 'X' ? RED : BLUE;
                 cout << currentPlayer.getName() << " (" << currentPlayer.getSymbol() 
                      << "), enter row (1-3) and column (1-3): ";
                 cin >> row >> col;
@@ -142,6 +157,7 @@ public:
                     break;
                 } else {
                     cout << "Invalid move. Try again." << endl;
+                    system("echo \a"); // Beep sound for invalid input
                 }
             }
             
@@ -152,6 +168,7 @@ public:
             if (board.checkWin(currentPlayer.getSymbol())) {
                 board.drawBoard();
                 cout << currentPlayer.getName() << " wins!" << endl;
+                system("echo \a");
                 return;
             }
             
@@ -162,14 +179,35 @@ public:
         // Game ended in a draw
         board.drawBoard();
         cout << "It's a draw!" << endl;
+        system("echo \a");
     }
 };
+
+void clearTerminalScreen() {
+    cout << "\033[2J\033[1H";
+}
 
 int main() {
     // Creating game object
     TicTacToe game;
-    
-    // Starting the game
-    game.play();
+ 
+    while (true) {
+        // Clear terminal before starting a new game
+        clearTerminalScreen();
+        cout << "Starting a new game of Tic-Tac-Toe..." << endl;
+        
+        game = TicTacToe();
+        game.play();
+        
+        // Ask if the players want to play again
+        char choice;
+        cout << "Do you want to play again? (y/n): ";
+        cin >> choice;
+        
+        if (choice != 'y' && choice != 'Y') {
+            break; // Exit the loop if players don't want to play again
+        }
+    }
+   
     return 0;
 }
