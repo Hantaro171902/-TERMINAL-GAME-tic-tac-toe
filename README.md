@@ -1,4 +1,4 @@
-# -TERMINAL-GAME-tic-tac-toe
+# ⭕ TIC TAC TOE ✖️ - (Terminal Edition) 
 
 # Rules of Tic-Tac-Toe
 Following are the rules that define how to play the tic tac toe game:
