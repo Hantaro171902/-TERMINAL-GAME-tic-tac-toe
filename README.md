@@ -1,4 +1,4 @@
-# -CONSOLE-GAME-tic-tac-toe
+# -TERMINAL-GAME-tic-tac-toe
 
 # Rules of Tic-Tac-Toe
 Following are the rules that define how to play the tic tac toe game:
